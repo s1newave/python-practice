@@ -1,5 +1,6 @@
 import math
 from tkinter import *
+from tkinter import ttk
 
 
 def calculate_circle_area(r):
