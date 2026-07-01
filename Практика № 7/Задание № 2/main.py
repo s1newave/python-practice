@@ -27,17 +27,20 @@ rectangle_frame = ttk.Frame(main_frame)
 triangle_frame = ttk.Frame(main_frame)
 
 figure_frames = {
-    "круга": circle_frame,
-    "прямоугольника": rectangle_frame,
-    "треугольника": triangle_frame
+    "круг": circle_frame,
+    "прямоугольник": rectangle_frame,
+    "треугольник": triangle_frame
 }
 
-(ttk.Label(main_frame, text="Площадь")
+(ttk.Label(main_frame, text="Фигура:")
     .grid(row=0, column=0, sticky=(N, S, E)))
 
-figure = StringVar()
-(ttk.Combobox(main_frame, textvariable=figure, values=figure_frames.keys())
+figure = StringVar(figure_frames[0])
+(ttk.Combobox(main_frame, textvariable=figure, values=list(figure_frames.keys()))
     .grid(row=0, column=1, sticky=(N, S, W)))
+
+def on_select_figure(event):
+    pass
 
 
 #(ttk.Button(main_frame, text="Вычислить", command=calculate_figure_area))
