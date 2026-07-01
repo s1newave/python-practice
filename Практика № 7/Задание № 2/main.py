@@ -34,7 +34,10 @@ figure_frames = {
 
 (ttk.Label(main_frame, text="Площадь")
     .grid(row=0, column=0, sticky=(N, S, E)))
-#ttk.Combobox(main_frame, values=figure_frames.keys())
+
+figure = StringVar()
+(ttk.Combobox(main_frame, textvariable=figure, values=figure_frames.keys())
+    .grid(row=0, column=1, sticky=(N, S, W)))
 
 
 #(ttk.Button(main_frame, text="Вычислить", command=calculate_figure_area))
