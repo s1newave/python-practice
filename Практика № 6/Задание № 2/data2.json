@@ -1,0 +1,36 @@
+[
+  {
+    "userId": 2,
+    "taskID": 1,
+    "completed": true
+  },
+  {
+    "userId": 2,
+    "taskID": 2,
+    "completed": true
+  },
+  {
+    "userId": 1,
+    "taskID": 1,
+    "completed": true
+  },
+  {
+    "userId": 1,
+    "taskID": 2,
+    "completed": false
+  },
+  {
+    "userId": 3,
+    "taskID": 3,
+    "completed": false
+  },
+  {
+    "userId": 4,
+    "taskID": 1,
+    "completed": true
+  },
+  {
+    "taskID": 4,
+    "completed": false
+  }
+]
