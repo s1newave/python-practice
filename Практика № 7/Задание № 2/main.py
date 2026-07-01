@@ -35,8 +35,8 @@ figure_frames = {
 (ttk.Label(main_frame, text="Фигура:")
     .grid(row=0, column=0, sticky=(N, S, E)))
 
-figure = StringVar(figure_frames[0])
-(ttk.Combobox(main_frame, textvariable=figure, values=list(figure_frames.keys()))
+figure = StringVar(list(figure_frames)[0])
+(ttk.Combobox(main_frame, textvariable=figure, values=list(figure_frames))
     .grid(row=0, column=1, sticky=(N, S, W)))
 
 def on_select_figure(event):
