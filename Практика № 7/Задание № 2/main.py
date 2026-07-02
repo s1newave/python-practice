@@ -121,8 +121,12 @@ calculate_button = ttk.Button(
 calculate_button.grid(row=3, column=0, columnspan=2)
 
 main_frame.rowconfigure(1, weight=1)
-for column in range(2):
-    main_frame.columnconfigure(column, weight=1)
+
+for frame in (main_frame, circle_frame, rectangle_frame, triangle_frame):
+    for child in frame.winfo_children():
+        child.grid_configure(padx=5, pady=5)
+    for col in range(frame.grid_size()[0]):
+        frame.columnconfigure(col, weight=1, uniform="col")
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
