@@ -8,125 +8,133 @@ from area_calculator import (
 )
 
 
-root = Tk()
-root.title("FigArea")
+class CircleFrame(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.radius_var = StringVar()
 
-main_frame = ttk.Frame(root, padding=10)
-main_frame.grid(row=0, column=0)
+        ttk.Label(self, text="Радиус:").grid(row=0, column=0, sticky=E)
+        ttk.Entry(self, textvariable=self.radius_var).grid(row=0, column=1, sticky=W)
 
-figure_frame = ttk.Frame(main_frame)
-figure_frame.grid(row=1, column=0, columnspan=2)
+    def get_inputs(self):
+        return (self.radius_var.get(),)
 
-circle_frame = ttk.Frame(figure_frame)
 
-circle_radius = StringVar()
-circle_radius_label = ttk.Label(circle_frame, text="Радиус:")
-circle_radius_label.grid(row=0, column=0, sticky=E)
-circle_radius_entry = ttk.Entry(circle_frame, textvariable=circle_radius)
-circle_radius_entry.grid(row=0, column=1, sticky=W)
+class RectangleFrame(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.side_a_var = StringVar()
+        self.side_b_var = StringVar()
 
-rectangle_frame = ttk.Frame(figure_frame)
+        ttk.Label(self, text="Сторона A:").grid(row=0, column=0, sticky=E)
+        ttk.Entry(self, textvariable=self.side_a_var).grid(row=0, column=1, sticky=W)
+        ttk.Label(self, text="Сторона B:").grid(row=1, column=0, sticky=E)
+        ttk.Entry(self, textvariable=self.side_b_var).grid(row=1, column=1, sticky=W)
 
-rectangle_side_a = StringVar()
-rectangle_side_a_label = ttk.Label(rectangle_frame, text="Сторона A:")
-rectangle_side_a_label.grid(row=0, column=0, sticky=E)
-rectangle_side_a_entry = ttk.Entry(rectangle_frame, textvariable=rectangle_side_a)
-rectangle_side_a_entry.grid(row=0, column=1, sticky=W)
+    def get_inputs(self):
+        return (self.side_a_var.get(), self.side_b_var.get())
 
-rectangle_side_b = StringVar()
-rectangle_side_b_label = ttk.Label(rectangle_frame, text="Сторона B:")
-rectangle_side_b_label.grid(row=1, column=0, sticky=E)
-rectangle_side_b_entry = ttk.Entry(rectangle_frame, textvariable=rectangle_side_b)
-rectangle_side_b_entry.grid(row=1, column=1, sticky=W)
 
-triangle_frame = ttk.Frame(figure_frame)
+class TriangleFrame(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.side_a_var = StringVar()
+        self.side_b_var = StringVar()
+        self.side_c_var = StringVar()
 
-triangle_side_a = StringVar()
-triangle_side_a_label = ttk.Label(triangle_frame, text="Сторона A:")
-triangle_side_a_label.grid(row=0, column=0, sticky=E)
-triangle_side_a_entry = ttk.Entry(triangle_frame, textvariable=triangle_side_a)
-triangle_side_a_entry.grid(row=0, column=1, sticky=W)
+        ttk.Label(self, text="Сторона A:").grid(row=0, column=0, sticky=E)
+        ttk.Entry(self, textvariable=self.side_a_var).grid(row=0, column=1, sticky=W)
+        ttk.Label(self, text="Сторона B:").grid(row=1, column=0, sticky=E)
+        ttk.Entry(self, textvariable=self.side_b_var).grid(row=1, column=1, sticky=W)
+        ttk.Label(self, text="Сторона C:").grid(row=2, column=0, sticky=E)
+        ttk.Entry(self, textvariable=self.side_c_var).grid(row=2, column=1, sticky=W)
 
-triangle_side_b = StringVar()
-triangle_side_b_label = ttk.Label(triangle_frame, text="Сторона B:")
-triangle_side_b_label.grid(row=1, column=0, sticky=E)
-triangle_side_b_entry = ttk.Entry(triangle_frame, textvariable=triangle_side_b)
-triangle_side_b_entry.grid(row=1, column=1, sticky=W)
+    def get_inputs(self):
+        return (self.side_a_var.get(), self.side_b_var.get(), self.side_c_var.get())
 
-triangle_side_c = StringVar()
-triangle_side_c_label = ttk.Label(triangle_frame, text="Сторона C:")
-triangle_side_c_label.grid(row=2, column=0, sticky=E)
-triangle_side_c_entry = ttk.Entry(triangle_frame, textvariable=triangle_side_c)
-triangle_side_c_entry.grid(row=2, column=1, sticky=W)
 
-figure_frames = {
-    "круг": circle_frame,
-    "прямоугольник": rectangle_frame,
-    "треугольник": triangle_frame
-}
+class FigureAreaApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("FigArea")
 
-def on_select_figure(event):
-    for frame in figure_frames.values():
-        frame.grid_forget()
-    figure_frames[figure.get()].grid(row=0, column=0, sticky="nsew")
-    area.set("")
+        self.figure = StringVar()
+        self.area = StringVar()
 
-figure = StringVar()
-figure_label = ttk.Label(main_frame, text="Фигура:")
-figure_label.grid(row=0, column=0, sticky=E)
-figure_combobox = ttk.Combobox(
-    main_frame,
-    textvariable=figure,
-    values=list(figure_frames),
-    state="readonly"
-)
-figure_combobox.current(0)
-figure_combobox.grid(row=0, column=1, sticky=W)
-figure_combobox.bind("<<ComboboxSelected>>", on_select_figure)
+        self.main_frame = ttk.Frame(self.root, padding=10)
+        self.main_frame.grid(row=0, column=0)
 
-area = StringVar()
+        self.figure_frame = ttk.Frame(self.main_frame)
+        self.figure_frame.grid(row=1, column=0, columnspan=2)
 
-area_label = ttk.Label(main_frame, text="Площадь:")
-area_label.grid(row=2, column=0, sticky=E)
-area_value_label = ttk.Label(main_frame, textvariable=area)
-area_value_label.grid(row=2, column=1, sticky=W)
+        self.circle_frame = CircleFrame(self.figure_frame)
+        self.rectangle_frame = RectangleFrame(self.figure_frame)
+        self.triangle_frame = TriangleFrame(self.figure_frame)
 
-def calculate_figure_area():
-    try:
-        match figure.get():
-            case "круг":
-                result = calculate_circle_area(float(circle_radius.get()))
-            case "прямоугольник":
-                result = calculate_rectangle_area(
-                    float(rectangle_side_a.get()),
-                    float(rectangle_side_b.get())
-                )
-            case "треугольник":
-                result = calculate_triangle_area(
-                    float(triangle_side_a.get()),
-                    float(triangle_side_b.get()),
-                    float(triangle_side_c.get())
-                )
-        area.set(str(round(result, 3)))
-    except ValueError:
-        pass
+        self.figure_frames = {
+            "круг": self.circle_frame,
+            "прямоугольник": self.rectangle_frame,
+            "треугольник": self.triangle_frame
+        }
 
-calculate_button = ttk.Button(
-    main_frame,
-    text="Вычислить",
-    command=calculate_figure_area
-)
-calculate_button.grid(row=3, column=0, columnspan=2)
+        figure_label = ttk.Label(self.main_frame, text="Фигура:")
+        figure_label.grid(row=0, column=0, sticky=E)
+        self.figure_combobox = ttk.Combobox(
+            self.main_frame,
+            textvariable=self.figure,
+            values=list(self.figure_frames),
+            state="readonly"
+        )
+        self.figure_combobox.current(0)
+        self.figure_combobox.grid(row=0, column=1, sticky=W)
+        self.figure_combobox.bind("<<ComboboxSelected>>", self.on_select_figure)
 
-main_frame.rowconfigure(1, weight=1)
+        area_label = ttk.Label(self.main_frame, text="Площадь:")
+        area_label.grid(row=2, column=0, sticky=E)
+        area_value_label = ttk.Label(self.main_frame, textvariable=self.area)
+        area_value_label.grid(row=2, column=1, sticky=W)
 
-for frame in (main_frame, circle_frame, rectangle_frame, triangle_frame):
-    for child in frame.winfo_children():
-        child.grid_configure(padx=5, pady=5)
+        calculate_button = ttk.Button(
+            self.main_frame,
+            text="Вычислить",
+            command=self.calculate_figure_area
+        )
+        calculate_button.grid(row=3, column=0, columnspan=2)
 
-root.rowconfigure(0, weight=1)
-root.columnconfigure(0, weight=1)
+        self.main_frame.rowconfigure(1, weight=1)
+        for frame in (self.main_frame, self.circle_frame, self.rectangle_frame, self.triangle_frame):
+            for child in frame.winfo_children():
+                child.grid_configure(padx=5, pady=5)
 
-on_select_figure(None)
+        self.root.rowconfigure(0, weight=1)
+        self.root.columnconfigure(0, weight=1)
 
-root.mainloop()
+        self.on_select_figure(None)
+
+    def on_select_figure(self, event):
+        for frame in self.figure_frames.values():
+            frame.grid_forget()
+        self.figure_frames[self.figure.get()].grid(row=0, column=0, sticky="nsew")
+        self.area.set("")
+
+    def calculate_figure_area(self):
+        try:
+            match self.figure.get():
+                case "круг":
+                    r = float(self.circle_frame.get_inputs()[0])
+                    result = calculate_circle_area(r)
+                case "прямоугольник":
+                    a, b = map(float, self.rectangle_frame.get_inputs())
+                    result = calculate_rectangle_area(a, b)
+                case "треугольник":
+                    a, b, c = map(float, self.triangle_frame.get_inputs())
+                    result = calculate_triangle_area(a, b, c)
+            self.area.set(str(round(result, 3)))
+        except ValueError:
+            pass
+
+
+if __name__ == "__main__":
+    root = Tk()
+    app = FigureAreaApp(root)
+    root.mainloop()
