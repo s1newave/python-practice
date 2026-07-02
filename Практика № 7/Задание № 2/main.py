@@ -86,10 +86,9 @@ figure_combobox.bind("<<ComboboxSelected>>", on_select_figure)
 area = StringVar()
 
 area_label = ttk.Label(main_frame, text="Площадь:")
-area_label.grid(row=2, column=0)
-
+area_label.grid(row=2, column=0, sticky=E)
 area_value_label = ttk.Label(main_frame, textvariable=area)
-area_value_label.grid(row=2, column=1)
+area_value_label.grid(row=2, column=1, sticky=W)
 
 def calculate_figure_area():
     try:
@@ -125,8 +124,6 @@ main_frame.rowconfigure(1, weight=1)
 for frame in (main_frame, circle_frame, rectangle_frame, triangle_frame):
     for child in frame.winfo_children():
         child.grid_configure(padx=5, pady=5)
-    for col in range(frame.grid_size()[0]):
-        frame.columnconfigure(col, weight=1, uniform="col")
 
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
