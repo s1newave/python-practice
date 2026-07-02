@@ -69,6 +69,7 @@ def on_select_figure(event):
     for frame in figure_frames.values():
         frame.grid_forget()
     figure_frames[figure.get()].grid(row=0, column=0, sticky="nsew")
+    area.set("")
 
 figure = StringVar()
 figure_label = ttk.Label(main_frame, text="Фигура:")
@@ -95,20 +96,18 @@ def calculate_figure_area():
         match figure.get():
             case "круг":
                 result = calculate_circle_area(float(circle_radius.get()))
-                area.set(str(result))
             case "прямоугольник":
                 result = calculate_rectangle_area(
                     float(rectangle_side_a.get()),
                     float(rectangle_side_b.get())
                 )
-                area.set(str(result))
             case "треугольник":
                 result = calculate_triangle_area(
                     float(triangle_side_a.get()),
                     float(triangle_side_b.get()),
                     float(triangle_side_c.get())
                 )
-                area.set(str(result))
+        area.set(str(round(result, 3)))
     except ValueError:
         pass
 
