@@ -136,5 +136,5 @@ class FigureAreaApp:
 
 if __name__ == "__main__":
     root = Tk()
-    app = FigureAreaApp(root)
+    FigureAreaApp(root)
     root.mainloop()
